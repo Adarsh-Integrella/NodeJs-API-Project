@@ -1,4 +1,5 @@
 const express = require("express");
+
 const {
   getBootcamps,
   getBootcamp,
@@ -8,12 +9,13 @@ const {
 } = require("../controller/bootcamps");
 
 const router = express.Router();
+const { protect } = require("../middleware/auth");
 
-router.route("/").get(getBootcamps).post(createBootcamp);
+router.route("/").get(getBootcamps).post(protect, createBootcamp);
 router
   .route("/:id")
-  .put(updateBootcamp)
+  .put(protect, updateBootcamp)
   .get(getBootcamp)
-  .delete(deleteBootcamp);
+  .delete(protect, deleteBootcamp);
 
 module.exports = router;
